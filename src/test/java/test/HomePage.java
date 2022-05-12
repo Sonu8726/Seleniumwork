@@ -1,21 +1,25 @@
 package test;
 
-import org.openqa.selenium.By;
-
+import org.testng.annotations.BeforeMethod;
 import base.BaseClass;
+import base.ConfigManager;
 import selenium.SafeActions;
 
 public class HomePage extends BaseClass {
 
+	private SafeActions safeAction;
+	private ConfigManager app;
+
+	@BeforeMethod(alwaysRun = true)
+	public void setup() {
+		safeAction = new SafeActions(driver);
+		app = new ConfigManager("App");
+	}
+
 	@org.testng.annotations.Test
 	public void Test() {
 
-		SafeActions safeAction = new SafeActions(driver);
-		driver.get("https://rahulshettyacademy.com/angularpractice/");
-
-		safeAction.safeClick(By.xpath("//a[text()='Shop']"));
-		
-		//a[contains(text(),'Checkout')]
+		safeAction.openURL(app.getProperty("applicationUrl"));
 
 	}
 }
