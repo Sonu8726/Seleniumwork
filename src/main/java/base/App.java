@@ -1,4 +1,4 @@
-package Sonu.Seleniumwork;
+package base;
 
 /**
  * Hello world!
