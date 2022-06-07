@@ -1,28 +1,49 @@
 package listner;
 
-import java.io.File;
-
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import io.qameta.allure.Attachment;
-
 public class TestListner implements ITestListener {
+	@Override
+	public void onFinish(ITestContext arg0) {
+		// TODO Auto-generated method stub
 
-	private static String getTestName(ITestResult test) {
-		return test.getMethod().getConstructorOrMethod().getName();
 	}
 
-	@Attachment
-	public byte[] saveFailedTestScreenShot(WebDriver driver) {
-		return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+	@Override
+	public void onStart(ITestContext arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	@Attachment(value = "{0}", type = "text/plain")
-	public static String saveTextLog(String log) {
-		return log;
+	@Override
+	public void onTestFailedButWithinSuccessPercentage(ITestResult arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onTestFailure(ITestResult arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onTestSkipped(ITestResult arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onTestStart(ITestResult arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onTestSuccess(ITestResult arg0) {
+		// TODO Auto-generated method stub
+
 	}
 }

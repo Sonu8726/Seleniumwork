@@ -18,7 +18,7 @@ public class SafeActions {
 	public SafeActions(WebDriver driver) {
 		this.driver = driver;
 	}
-
+	
 	public void openURL(String url) {
 		driver.get(url);
 		log.info(url + " link is opened in the browser.");
