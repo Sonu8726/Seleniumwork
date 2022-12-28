@@ -10,26 +10,20 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-
 public class BaseClass {
 	protected static WebDriver driver = null;
 	private static final Logger log = LogManager.getLogger(BaseClass.class);
-	ConfigManager sys = new ConfigManager();
+	static ConfigManager sys = new ConfigManager();
 
 	@BeforeMethod(alwaysRun = true)
-	public WebDriver init() {
+	public static WebDriver init() {
 		if (sys.getProperty("browser").equalsIgnoreCase("firefox")) {
-			WebDriverManager.firefoxdriver().setup();
 			driver = new FirefoxDriver();
 		} else if (sys.getProperty("browser").equalsIgnoreCase("Edge")) {
-			WebDriverManager.edgedriver().setup();
 			driver = new EdgeDriver();
 		} else if (sys.getProperty("browser").equalsIgnoreCase("internetExlorer")) {
-			WebDriverManager.iedriver().setup();
 			driver = new InternetExplorerDriver();
 		} else {
-			WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver();
 		}
 		driver.manage().window().maximize();

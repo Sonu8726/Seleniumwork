@@ -64,13 +64,13 @@ public class TestListner implements ITestListener {
 	@Override
 	public void onTestFailure(ITestResult arg0) {
 		System.out.println(getTestMethodName(arg0) + " failed.");
-		BaseClass bc = new BaseClass();
-		WebDriver driver = bc.init();
+
+		WebDriver driver = BaseClass.init();
 
 		if (driver instanceof WebDriver) {
 			System.out.println("Capturing Screenshot for " + getTestMethodName(arg0));
 			saveAsScreenshotAsPNG(driver);
-		}else {
+		} else {
 			System.out.println("NOOONTPNSJ FKNJFNSJKFNJHSB FJKF HNJS NDHBSF NSKJFBHFBFH");
 		}
 
