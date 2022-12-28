@@ -10,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import io.qameta.allure.Step;
+
 public class SafeActions {
 
 	WebDriver driver;
@@ -18,32 +20,38 @@ public class SafeActions {
 	public SafeActions(WebDriver driver) {
 		this.driver = driver;
 	}
-	
+
+	@Step("Opening the url: {0}")
 	public void openURL(String url) {
 		driver.get(url);
 		log.info(url + " link is opened in the browser.");
 	}
 
+	@Step("Highlighting the element: {0}")
 	public void highlightElement(By element) {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
 		String attributeValue = "border:2px solid red;";
 		String getAttribute = driver.findElement(element).getAttribute("style");
-		jse.executeScript("arguments[0].setAttribute('style',arguments[1]);", driver.findElement(element), attributeValue);
+		jse.executeScript("arguments[0].setAttribute('style',arguments[1]);", driver.findElement(element),
+				attributeValue);
 		try {
 			Thread.sleep(300);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		jse.executeScript("arguments[0].setAttribute('style',arguments[1]);", driver.findElement(element), getAttribute);
+		jse.executeScript("arguments[0].setAttribute('style',arguments[1]);", driver.findElement(element),
+				getAttribute);
 		log.info("Element is highlighted");
 	}
 
+	@Step("Clicking on the element: {0}")
 	public void safeClick(By elem) {
 		highlightElement(elem);
 		driver.findElement(elem).click();
 		log.info(driver.findElement(elem).getText() + " clicked.");
 	}
 
+	@Step("Typing {1} into the element {2}")
 	public void safeType(By elem, String value, String elementName, int timeout) {
 		highlightElement(elem);
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));

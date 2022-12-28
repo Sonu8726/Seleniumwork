@@ -7,8 +7,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -17,7 +17,7 @@ public class BaseClass {
 	private static final Logger log = LogManager.getLogger(BaseClass.class);
 	ConfigManager sys = new ConfigManager();
 
-	@BeforeTest(alwaysRun = true)
+	@BeforeMethod(alwaysRun = true)
 	public WebDriver init() {
 		if (sys.getProperty("browser").equalsIgnoreCase("firefox")) {
 			WebDriverManager.firefoxdriver().setup();
@@ -37,9 +37,13 @@ public class BaseClass {
 		return driver;
 	}
 
-	@AfterTest
+	@AfterMethod
 	public void close() {
-		driver.quit();
+		if (driver != null) {
+			driver.manage().deleteAllCookies();
+			driver.quit();
+		}
+
 	}
 
 }
