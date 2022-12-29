@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeMethod;
 
 public class BaseClass {
 	protected static WebDriver driver = null;
-	private static final Logger log = LogManager.getLogger(BaseClass.class);
+	protected static final Logger log = LogManager.getLogger(BaseClass.class);
 	static ConfigManager sys = new ConfigManager();
 
 	@BeforeMethod(alwaysRun = true)
@@ -38,6 +38,10 @@ public class BaseClass {
 			driver.quit();
 		}
 
+	}
+
+	public WebDriver getDriver() {
+		return driver;
 	}
 
 }

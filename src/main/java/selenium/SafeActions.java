@@ -1,5 +1,7 @@
 package selenium;
 
+import static org.testng.Assert.assertEquals;
+
 import java.time.Duration;
 
 import org.apache.logging.log4j.LogManager;
@@ -7,6 +9,8 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -21,14 +25,25 @@ public class SafeActions {
 		this.driver = driver;
 	}
 
+	/**
+	 * It will launch the URL
+	 * 
+	 * @param url - Application Web url
+	 */
 	@Step("Opening the url: {0}")
 	public void openURL(String url) {
 		driver.get(url);
 		log.info(url + " link is opened in the browser.");
 	}
 
+	/**
+	 * It will highlight the element. It will add a border which will be use to
+	 * identify the correct element while execution
+	 * 
+	 * @param element - Element locator
+	 */
 	@Step("Highlighting the element: {0}")
-	public void highlightElement(By element) {
+	private void highlightElement(By element) {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
 		String attributeValue = "border:2px solid red;";
 		String getAttribute = driver.findElement(element).getAttribute("style");
@@ -44,19 +59,123 @@ public class SafeActions {
 		log.info("Element is highlighted");
 	}
 
-	@Step("Clicking on the element: {0}")
-	public void safeClick(By elem) {
-		highlightElement(elem);
-		driver.findElement(elem).click();
-		log.info(driver.findElement(elem).getText() + " clicked.");
+	/**
+	 * This function will be used to Validate the current page title.
+	 * 
+	 * @param expectedTitle - What will be the title
+	 */
+	@Step("Validating the current Page title is : {0}")
+	public void safeValidateThePageTitle(String expectedTitle) {
+		String actualTitle = driver.getTitle();
+		assertEquals(actualTitle, expectedTitle);
 	}
 
+	/**
+	 * This function will be used for the click operation.
+	 * 
+	 * @param elem        - Element locator
+	 * @param elementName - A name for the element
+	 * @param timeout     - timeout (in seconds)
+	 */
+	@Step("Perform click on the element: {1}")
+	public void safeClick(By elem, String elementName, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		try {
+			wait.until(ExpectedConditions.visibilityOfElementLocated(elem));
+			highlightElement(elem);
+			driver.findElement(elem).click();
+			log.info(elementName + " clicked.");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * This function will be used for the click operation using Actions class of
+	 * Selenium.
+	 * 
+	 * @param elem        - Element locator
+	 * @param elementName - A name for the element
+	 * @param timeout     - timeout (in seconds)
+	 */
+	@Step("Perform click on the element: {1}")
+	public void safeClickUsingActionsClass(By elem, String elementName, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		Actions actn = new Actions(driver);
+		try {
+			wait.until(ExpectedConditions.visibilityOfElementLocated(elem));
+			highlightElement(elem);
+			WebElement element = driver.findElement(elem);
+			actn.click(element).build().perform();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * This function will be used for the double click operation using Actions class
+	 * of Selenium.
+	 * 
+	 * @param elem        - Element locator
+	 * @param elementName - A name for the element
+	 * @param timeout     - timeout (in seconds)
+	 */
+	@Step("Perform double Click on the element: {1}")
+	public void safeDoubleClick(By elem, String elementName, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		Actions actn = new Actions(driver);
+		try {
+			wait.until(ExpectedConditions.visibilityOfElementLocated(elem));
+			highlightElement(elem);
+			WebElement element = driver.findElement(elem);
+			actn.doubleClick(element).build().perform();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * This function will be used for the right click operation using Actions class
+	 * of Selenium.
+	 * 
+	 * @param elem        - Element locator
+	 * @param elementName - A name for the element
+	 * @param timeout     - timeout (in seconds)
+	 */
+	@Step("Perform Context/Right Click on the element: {1}")
+	public void safeContextClick(By elem, String elementName, int timeout) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		Actions actn = new Actions(driver);
+		try {
+			wait.until(ExpectedConditions.visibilityOfElementLocated(elem));
+			highlightElement(elem);
+			WebElement element = driver.findElement(elem);
+			actn.contextClick(element).build().perform();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * This function will be used to type something into the element.
+	 * 
+	 * @param elem        - Element locator
+	 * @param value       - typing message/text
+	 * @param elementName - A name for the element
+	 * @param timeout     - timeout (in seconds)
+	 */
 	@Step("Typing {1} into the element {2}")
 	public void safeType(By elem, String value, String elementName, int timeout) {
-		highlightElement(elem);
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-		wait.until(ExpectedConditions.visibilityOf(driver.findElement(elem)));
-		driver.findElement(elem).sendKeys(value);
-		log.info("Type" + value + " in to the element " + driver.findElement(elem).getText());
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+		try {
+			wait.until(ExpectedConditions.visibilityOfElementLocated(elem));
+			highlightElement(elem);
+			driver.findElement(elem).sendKeys(value);
+			log.info("Type" + value + " in to the element " + driver.findElement(elem).getText());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 }

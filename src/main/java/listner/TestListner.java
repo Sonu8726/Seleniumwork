@@ -1,31 +1,28 @@
 package listner;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 import base.BaseClass;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 
-public class TestListner implements ITestListener {
+public class TestListner extends BaseClass implements ITestListener {
 
 	private static String getTestMethodName(ITestResult itr) {
 		return itr.getMethod().getConstructorOrMethod().getName();
 	}
 
-	@Attachment(value = "Screenshot", type = "image/png")
-	public byte[] saveAsScreenshotAsPNG(WebDriver driver) {
-		return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-	}
-
+	// Text attachments for Allure
 	@Attachment(value = "{0}", type = "text/plain")
-	public static String saveTextLong(String txt) {
-		return txt;
+	public static String saveTextLog(String message) {
+		return message;
 	}
 
 	@Override
@@ -62,36 +59,28 @@ public class TestListner implements ITestListener {
 	}
 
 	@Override
-	public void onTestFailure(ITestResult arg0) {
-		System.out.println(getTestMethodName(arg0) + " failed.");
+	public void onTestFailure(ITestResult iTestResult) {
 
-		WebDriver driver = BaseClass.init();
+		Allure.addAttachment("FailureScreenshot",
+				new ByteArrayInputStream(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
 
-		if (driver instanceof WebDriver) {
-			System.out.println("Capturing Screenshot for " + getTestMethodName(arg0));
-			saveAsScreenshotAsPNG(driver);
-		} else {
-			System.out.println("NOOONTPNSJ FKNJFNSJKFNJHSB FJKF HNJS NDHBSF NSKJFBHFBFH");
-		}
-
-		saveTextLong(getTestMethodName(arg0) + " is failed and screenshot captured successfully.");
+		// Save a log on allure.
+		saveTextLog(getTestMethodName(iTestResult) + " failed and screenshot taken!");
 	}
 
 	@Override
-	public void onTestSkipped(ITestResult arg0) {
-		// TODO Auto-generated method stub
+	public void onTestSkipped(ITestResult iTestResult) {
 
 	}
 
 	@Override
-	public void onTestStart(ITestResult arg0) {
-		// TODO Auto-generated method stub
+	public void onTestStart(ITestResult iTestResult) {
 
 	}
 
 	@Override
-	public void onTestSuccess(ITestResult arg0) {
-		// TODO Auto-generated method stub
-
+	public void onTestSuccess(ITestResult iTestResult) {
+		Allure.addAttachment("Success",
+				new ByteArrayInputStream(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
 	}
 }
