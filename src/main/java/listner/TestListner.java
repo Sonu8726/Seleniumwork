@@ -5,10 +5,10 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-
 import base.BaseClass;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
@@ -20,9 +20,21 @@ public class TestListner extends BaseClass implements ITestListener {
 	}
 
 	// Text attachments for Allure
+	@Attachment(value = "Page screenshot", type = "image/png")
+	public byte[] saveScreenshotPNG(WebDriver driver) {
+		return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+	}
+
+	// Text attachments for Allure
 	@Attachment(value = "{0}", type = "text/plain")
 	public static String saveTextLog(String message) {
 		return message;
+	}
+
+	// HTML attachments for Allure
+	@Attachment(value = "{0}", type = "text/html")
+	public static String attachHtml(String html) {
+		return html;
 	}
 
 	@Override
@@ -60,10 +72,13 @@ public class TestListner extends BaseClass implements ITestListener {
 
 	@Override
 	public void onTestFailure(ITestResult iTestResult) {
-
-		Allure.addAttachment("FailureScreenshot",
-				new ByteArrayInputStream(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
-
+		System.out.println("I am in onTestFailure method " + getTestMethodName(iTestResult) + " failed");
+		// Allure ScreenShotRobot and SaveTestLog
+		WebDriver driver = BaseClass.getDriver();
+		if (driver instanceof WebDriver) {
+			System.out.println("Screenshot captured for test case:" + getTestMethodName(iTestResult));
+			saveScreenshotPNG(driver);
+		}
 		// Save a log on allure.
 		saveTextLog(getTestMethodName(iTestResult) + " failed and screenshot taken!");
 	}

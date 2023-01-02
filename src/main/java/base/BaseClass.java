@@ -40,7 +40,7 @@ public class BaseClass {
 
 	}
 
-	public WebDriver getDriver() {
+	public static WebDriver getDriver() {
 		return driver;
 	}
 

@@ -178,4 +178,12 @@ public class SafeActions {
 		}
 
 	}
+
+	public boolean isElementDisplayed(By xpath) {
+		// TODO Auto-generated method stub
+		if (driver.findElement(xpath).isDisplayed()) {
+			return true;
+		}
+		return false;
+	}
 }

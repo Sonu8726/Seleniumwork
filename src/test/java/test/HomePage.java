@@ -1,7 +1,6 @@
 package test;
 
 import org.openqa.selenium.By;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import base.BaseClass;
@@ -32,6 +31,8 @@ public class HomePage extends BaseClass implements HomePagelocators {
 		safeAction.openURL(testData.applicationUrl);
 
 		safeAction.safeValidateThePageTitle("Practice Page");
+
+		safeAction.isElementDisplayed(By.xpath("//h1"));
 
 		safeAction.safeClick(By.id("opentab"), "Open Tab ", 5);
 	}
