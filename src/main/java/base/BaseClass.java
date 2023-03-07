@@ -7,35 +7,38 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 
 public class BaseClass {
 	protected static WebDriver driver = null;
 	protected static final Logger log = LogManager.getLogger(BaseClass.class);
-	static ConfigManager sys = new ConfigManager();
+	ConfigManager sys = new ConfigManager();
 
-	@BeforeMethod(alwaysRun = true)
+	@BeforeTest(alwaysRun = true)
 	public static WebDriver init() {
-		if (sys.getProperty("browser").equalsIgnoreCase("firefox")) {
+		BaseClass bc = new BaseClass();
+		if (bc.sys.getProperty("browser").equalsIgnoreCase("firefox")) {
 			driver = new FirefoxDriver();
-		} else if (sys.getProperty("browser").equalsIgnoreCase("Edge")) {
+		} else if (bc.sys.getProperty("browser").equalsIgnoreCase("Edge")) {
 			driver = new EdgeDriver();
-		} else if (sys.getProperty("browser").equalsIgnoreCase("internetExlorer")) {
+		} else if (bc.sys.getProperty("browser").equalsIgnoreCase("internetExlorer")) {
 			driver = new InternetExplorerDriver();
 		} else {
 			driver = new ChromeDriver();
 		}
 		driver.manage().window().maximize();
-		log.info(sys.getProperty("browser") + " browser initialized.");
+		log.info(bc.sys.getProperty("browser") + " browser initialized.");
 		return driver;
 	}
 
-	@AfterMethod
+	@AfterTest
 	public void close() {
 		if (driver != null) {
+			BaseClass bc = new BaseClass();
 			driver.manage().deleteAllCookies();
 			driver.quit();
+			log.info(bc.sys.getProperty("browser") + " browser closed successfully.");
 		}
 
 	}

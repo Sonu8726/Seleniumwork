@@ -1,8 +1,10 @@
-package test;
+package uitest;
 
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+
 import base.BaseClass;
 import data.TestData;
 import io.qameta.allure.Description;
@@ -24,7 +26,7 @@ public class HomePage extends BaseClass implements HomePagelocators {
 		testData = new TestData();
 	}
 
-	@org.testng.annotations.Test
+	@Test
 	@Description("Login to the Application")
 	@Severity(SeverityLevel.BLOCKER)
 	public void testcase1_selectARadioButton() {
@@ -32,8 +34,8 @@ public class HomePage extends BaseClass implements HomePagelocators {
 
 		safeAction.safeValidateThePageTitle("Practice Page");
 
-		safeAction.isElementDisplayed(By.xpath("//h1"));
+		safeAction.isElementPresent();
 
-		safeAction.safeClick(By.id("opentab"), "Open Tab ", 5);
+		safeAction.safeClickUsingActionsClass(By.id("opentab"), "Open Tab ", 5);
 	}
 }

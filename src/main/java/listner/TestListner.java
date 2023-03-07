@@ -41,7 +41,7 @@ public class TestListner extends BaseClass implements ITestListener {
 	public void onFinish(ITestContext arg0) {
 		try {
 			ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c",
-					"cd \"C:\\Users\\5onuk\\git\\Seleniumwork\" && allure serve allure-results");
+					"cd \"" + System.getProperty("user.dir") + "\" && allure serve allure-results");
 			builder.redirectErrorStream(true);
 			Process p = builder.start();
 			BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));

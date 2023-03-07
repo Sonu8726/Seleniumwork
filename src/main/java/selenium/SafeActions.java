@@ -13,15 +13,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import io.qameta.allure.Step;
 
-public class SafeActions {
+public class SafeActions extends Sync {
 
 	WebDriver driver;
 	private static final Logger log = LogManager.getLogger(SafeActions.class);
 
 	public SafeActions(WebDriver driver) {
+		super(driver);
 		this.driver = driver;
 	}
 
@@ -73,9 +73,9 @@ public class SafeActions {
 	/**
 	 * This function will be used for the click operation.
 	 * 
-	 * @param elem        - Element locator
-	 * @param elementName - A name for the element
-	 * @param timeout     - timeout (in seconds)
+	 * @param elementLocator - Element locator
+	 * @param elementName    - A name for the element
+	 * @param timeout        - timeout (in seconds)
 	 */
 	@Step("Perform click on the element: {1}")
 	public void safeClick(By elem, String elementName, int timeout) {
@@ -95,9 +95,9 @@ public class SafeActions {
 	 * This function will be used for the click operation using Actions class of
 	 * Selenium.
 	 * 
-	 * @param elem        - Element locator
-	 * @param elementName - A name for the element
-	 * @param timeout     - timeout (in seconds)
+	 * @param elementLocator - Element locator
+	 * @param elementName    - A name for the element
+	 * @param timeout        - timeout (in seconds)
 	 */
 	@Step("Perform click on the element: {1}")
 	public void safeClickUsingActionsClass(By elem, String elementName, int timeout) {
@@ -117,9 +117,9 @@ public class SafeActions {
 	 * This function will be used for the double click operation using Actions class
 	 * of Selenium.
 	 * 
-	 * @param elem        - Element locator
-	 * @param elementName - A name for the element
-	 * @param timeout     - timeout (in seconds)
+	 * @param elementLocator - Element locator
+	 * @param elementName    - A name for the element
+	 * @param timeout        - timeout (in seconds)
 	 */
 	@Step("Perform double Click on the element: {1}")
 	public void safeDoubleClick(By elem, String elementName, int timeout) {
@@ -139,9 +139,9 @@ public class SafeActions {
 	 * This function will be used for the right click operation using Actions class
 	 * of Selenium.
 	 * 
-	 * @param elem        - Element locator
-	 * @param elementName - A name for the element
-	 * @param timeout     - timeout (in seconds)
+	 * @param elementLocator - Element locator
+	 * @param elementName    - A name for the element
+	 * @param timeout        - timeout (in seconds)
 	 */
 	@Step("Perform Context/Right Click on the element: {1}")
 	public void safeContextClick(By elem, String elementName, int timeout) {
@@ -160,10 +160,10 @@ public class SafeActions {
 	/**
 	 * This function will be used to type something into the element.
 	 * 
-	 * @param elem        - Element locator
-	 * @param value       - typing message/text
-	 * @param elementName - A name for the element
-	 * @param timeout     - timeout (in seconds)
+	 * @param elementLocator - Element locator
+	 * @param value          - typing message/text
+	 * @param elementName    - A name for the element
+	 * @param timeout        - timeout (in seconds)
 	 */
 	@Step("Typing {1} into the element {2}")
 	public void safeType(By elem, String value, String elementName, int timeout) {
@@ -177,13 +177,5 @@ public class SafeActions {
 			e.printStackTrace();
 		}
 
-	}
-
-	public boolean isElementDisplayed(By xpath) {
-		// TODO Auto-generated method stub
-		if (driver.findElement(xpath).isDisplayed()) {
-			return true;
-		}
-		return false;
 	}
 }
