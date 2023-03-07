@@ -1,9 +1,43 @@
-# Seleniumwork
-Selenium work is a Test Automation framework.
 
-I have added the required dependencies.
+# SeleniumWord
 
-I have added the -
-		1.	UI Automation - Using Selenium
-		2.	API Automation - Using Rest Assured
-		
+This is Java Based Automation Framework. 
+## Basic Setup and First Execution
+
+Clone the project
+
+```bash
+  git clone https://link-to-project
+```
+
+Go to the project directory
+
+```bash
+  cd SeleniumWork
+```
+
+Install dependencies
+
+```bash
+  mvn install
+```
+
+Start the execution
+
+```bash
+  mvn test
+```
+
+
+## Tech Stack
+
+**Language:** Java
+
+**Dependencies:** Selenium, TestNG, Rest Assured, Apache POI, Apache Commons IO, WebDriverManager, Allure Report etc.
+
+**Testing Framework:** TestNG
+
+**Build Tool :** Maven
+
+**Reporting :** Allure
+
