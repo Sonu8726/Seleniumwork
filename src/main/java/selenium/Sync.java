@@ -6,13 +6,13 @@ import base.BaseClass;
 
 public class Sync extends BaseClass {
 
-	private WebDriver driver;
+   private WebDriver driver;
 
-	public Sync(WebDriver driver) {
-		this.driver = driver;
-	}
+   public Sync(WebDriver driver) {
+      this.driver = driver;
+   }
 
-	public boolean isElementPresent() {
-		return true;
-	}
+   public boolean isElementPresent() {
+      return true;
+   }
 }

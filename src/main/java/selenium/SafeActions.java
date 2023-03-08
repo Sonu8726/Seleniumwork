@@ -51,9 +51,9 @@ public class SafeActions extends Sync {
 				attributeValue);
 		try {
 			Thread.sleep(300);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+         } catch (InterruptedException e) {
+            e.printStackTrace();
+         }
 		jse.executeScript("arguments[0].setAttribute('style',arguments[1]);", driver.findElement(element),
 				getAttribute);
 		log.info("Element is highlighted");
