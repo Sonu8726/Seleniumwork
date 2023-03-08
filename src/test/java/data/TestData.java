@@ -1,6 +1,6 @@
 package data;
 
-import base.ConfigManager;
+import utils.ConfigManager;
 
 public class TestData {
 

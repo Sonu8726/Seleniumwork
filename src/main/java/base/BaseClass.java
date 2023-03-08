@@ -10,6 +10,8 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
+import utils.ConfigManager;
+
 public class BaseClass {
 	protected static WebDriver driver = null;
 	protected static final Logger log = LogManager.getLogger(BaseClass.class);
