@@ -6,7 +6,12 @@
 	</listeners>
 	<test name="Testing Home Page">
 		<classes>
-			<class name="test.HomePage"></class>
+			<class name="uitest.HomePage"></class>
+		</classes>
+	</test> <!-- Test -->
+	<test name="Testing API Page">
+		<classes>
+			<class name="apitest.APITest"></class>
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->
