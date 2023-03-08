@@ -1,5 +1,5 @@
 
-# SeleniumWord
+# SeleniumWork
 
 This is Java Based Automation Framework. 
 ## Basic Setup and First Execution
